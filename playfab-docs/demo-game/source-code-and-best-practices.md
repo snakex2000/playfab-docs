@@ -10,7 +10,7 @@ keywords: playfab, gaming, sample, demo
 ms.localizationpriority: medium
 ---
 
-# Sample code and scenarios in Winter Starfall
+# Source code and scenarios in Winter Starfall
 
 This tutorial contains instructions for downloading and running the source code for Winter Starfall, and a walkthrough of the code samples demonstrating best practices for login and purchase scenarios.
 
@@ -40,7 +40,7 @@ The player authentication flow in Winter Starfall has two steps: the login call 
 
 ### Player authentication
 
-For the login portion, the file [use-login.tsx](https://github.com/PlayFab/vanguard-outrider-2/blob/main/website/src/hooks/use-login.ts) defines a wrapper function that handles the multiple authentication methods available to players. Lines 144 -169 defines the callback function for login in with an email address, and calls the post-login functions if login suceeds.
+For the login portion, the file [use-login.tsx](https://github.com/PlayFab/vanguard-outrider-2/blob/main/website/src/hooks/use-login.ts) defines a TypeScript wrapper function that handles the multiple authentication methods available to players. Lines 144 -169 defines the callback function for login in with an email address, and calls the post-login functions if login suceeds.
 
 ```typescript
 	const onLogin = useCallback(() => {
@@ -73,59 +73,14 @@ For the login portion, the file [use-login.tsx](https://github.com/PlayFab/vangu
 
 The game offers 3 recoverable methods for player authentication: email, Google, and Facebook, so that player accounts will never be lost. For more information, see [Login best practices](../features/authentication/login/login-basics-best-practices.md).
 
-### Post login: Getting player data
-Involves player auth and title data APIs to login player and load correct game state.
 First part - login
 Login > progress.tsx, runner.tsx, sign-up-register.tsx reference use-login
 OnLogin, OnloginWithGoogle, OnLoginWithFacebook
 
-Returns security key that is used for all other API calls
+### Post login: Getting player data
 
-Second part - Post login
-
-Lines 309 - 344 defines **postLoginFunctions**, which calls various Economy and PlayFab Services APIs to load the correct story location, inventory items, currency, etc based on the player. 
-
-loads scripts and uses player data to load correct location and story
-
-```typescript
-export function usePlayFabPostLoginData() {
-	const {
-		ClientGetUserData,
-		ClientGetUserReadOnlyData,
-		ClientGetTitleData,
-		EconomySearchItems,
-		EconomyGetInventoryItems,
-	} = usePlayFab();
-	const dispatch = useDispatch();
-
-	const postLoginFunctions = useCallback(() => {
-		const scripts = import.meta.glob("../data/*.json", { query: "raw" });
-
-		const loadScripts = () => {
-			for (const path in scripts) {
-				scripts[path]().then(mod => {
-					if (path.indexOf("locations.json") !== -1) {
-						dispatch(siteSlice.actions.locations(JSON.parse((mod as any).default) as ILocalDataLocations));
-					}
-					if (path.indexOf("enemies.json") !== -1) {
-						dispatch(siteSlice.actions.enemies(JSON.parse((mod as any).default) as ILocalDataEnemies));
-					}
-					if (path.indexOf("cinematics.json") !== -1) {
-						dispatch(
-							siteSlice.actions.cinematicData(JSON.parse((mod as any).default) as ILocalDataCinematics)
-						);
-					}
-				});
-			}
-		};
-```
-
-- `ClientGetUserData` retrieves the value that stores the story location as part of a player's data.
-- `ClientGetTitleData`
-- `EconomySearchItems`
--  `EconomyGetInventoryItems`
-
-Lines 340 - 378 
+Once the security token has been retrieved, it is used to run the post login functions to get the saved game state.
+Lines 340 - 378 defines **postLoginFunctions**, which calls various Economy and PlayFab Services APIs to load the correct story location, inventory items, currency, etc based on the player.
 
 ```typescript
 return new Promise<void>((resolve, reject) => {
@@ -169,18 +124,65 @@ return new Promise<void>((resolve, reject) => {
 				});
 ```
 
+- First `ClientGetTitleData`
+- Then `EconomySearchItems` searches the catalog for currency and item types
+- Which is used as input to `EconomyGetInventoryItems` to return the player's inventory items
+- Then `ClientGetUserData` retrieves the value that stores the story location as part of a player's data.
+
 ## Purchase flow
 
-At certain points in the game, the player has the option to purchase and sell inventory items from the store.
+At certain points in the game, the player has the option to purchase and sell inventory items from the store. The purchase flow is implemented in another wrapper function.
 
 In the file [use-store.tx](https://github.com/PlayFab/vanguard-outrider-2/blob/main/website/src/hooks/use-store.ts)
 
+### Selling items
 
-Purchase flow
-This demonstrates best practices – how/why?
-Typescript wrapper function
-In file use-store.ts 
-vanguard-outrider-2/website/src/hooks/use-store.ts at main · PlayFab/vanguard-outrider-2 (github.com)
+The selling flow is an example of how to use Azure Functions driven CloudScript to extend the functionality of Economy system.
+
+[SellItem.cs](https://github.com/PlayFab/vanguard-outrider-2/blob/main/azure-functions/SellItem.cs) defines the CloudScript function that executes when selling an item.
+
+Line 49 - 61 is where PlayFab's `GetTitleData API` is used to return the store multiplier and calculate the sale price.
+
+```csharp
+ // Get your sell multiplier
+                var titleData = await PlayFabFunctions.GetTitleDataAsync(player, new List<string> { TitleDataKeys.Multipliers }, log);
+                var sellMultiplier = JsonConvert.DeserializeObject<Multipliers>(titleData[TitleDataKeys.Multipliers])?.sell ?? 1;
+```
+The CloudScript function then gets called in lines 161- 187 of [use-store.ts](https://github.com/PlayFab/vanguard-outrider-2/blob/main/website/src/hooks/use-store.ts).
+
+```typescript
+export function useEconomyStoreSell(): IEconomyStoreSellItemResults {
+	const { isLoading, error, setError, CloudScriptExecuteFunction, EconomyGetInventoryItems } = usePlayFab();
+	const dispatch = useDispatch();
+
+	const onSell = useCallback(
+		(itemId: string, amount: number) => {
+			return new Promise<void>((resolve, reject) => {
+				CloudScriptExecuteFunction({
+					FunctionName: "SellItem",
+					FunctionParameter: {
+						ItemId: itemId,
+						Amount: amount,
+					},
+				})
+					.then(() => EconomyGetInventoryItems({ Count: SEARCH_ITEMS_MAX_COUNT }))
+					.then(data => {
+						dispatch(siteSlice.actions.inventory(data.Items));
+						resolve();
+					})
+					.catch(issue => {
+						setError(issue);
+						reject(issue);
+					});
+			});
+		},
+		[CloudScriptExecuteFunction, EconomyGetInventoryItems, dispatch, setError]
+	);
+```
+
+> [!NOTE]
+> To run Winter Starfall locally you'll need an Azure account to support the CloudScript functions. You can sign up for a free Azure account [here](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account?msockid=1dec68fa155462cb2baa7ca6147963d7) and then follow the instructions above to reset the Azure credentials correctly.
+
 Reach a checkpoint in the story where the player visits the store for the first time
 trackEvent({ name: "Checkpoint reached" }, { checkpoint: request.FunctionParameter.checkpoint});
 
@@ -191,16 +193,10 @@ For more detailed information on Economy practices, see the Economy V2 documenta
 - Inventory
 
 As a next step, Economy crafting game.
+EconomySearchItems – search catalog for inventory items
+Economy crafting game
 
 ## See also
 
-- Player login / authenticaiton 
-
-In the file use-login.ts at lines 340 – 378
-vanguard-outrider-2/website/src/hooks/use-login.ts at main · PlayFab/vanguard-outrider-2 (github.com)
--	Get title data (API call)
--	EconomySearchItems – search catalog for inventory items
-- Economy crafting game
-
-
-Is there anything that won’t run without additional setup? ie Azure subscription 
+- Player login documentation
+- Economy V2 documentation
