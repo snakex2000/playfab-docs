@@ -112,7 +112,7 @@ Learn more about the Player data feature [here](../features/playerdata/index.md)
 
 ### Title data
 
-Title data is similar to Player data, just being data pertaining to a game title instead of a specific player. Winter Starfall uses title data in conjuction with the Economy system to calculate the price when selling an item by storing the value `multipliers` with a value of `sell, 0.5`.
+Title data is similar to Player data in that it stores key-value pairs, only the data pertains to the game title instead of a specific player. Winter Starfall uses title data in conjuction with the Economy system to calculate the price when selling an item by storing the value `multipliers` with a value of `sell, 0.5`.
 
 ![winterstarfall-title-data](winterstarfall-title-data.jpeg)
 
@@ -120,24 +120,90 @@ Learn more about Title data [here](../features/titledata/index.md).
 
 ### CloudScript with Azure Functions
 
-CloudScript is another key part of making this game work, because its a very flexible feature that allows you to enables serverless compute on demand 
+CloudScript is a very flexible feature that allows you to implement custom server-side fucntionality, which allows for nearly limitless solutions when paired with other PlayFab features.
 
-request execution of any custom server-side functionality you can implement, and it can be used in conjunction with virtually anything.
+The game uses this feature to solve for a number of scenarios:
 
-Vanguard Outrider runs CloudScript functions in C#, but y can use any language supported by Azure Functions [
-Supported languages in Azure Functions | Microsoft Learn ] 
+- [CombatVictory](https://github.com/PlayFab/vanguard-outrider-2/blob/main/azure-functions/CombatVictory.cs) - After the player wins a battle, execute a series of actions to grant exp, items, and add party members.
+- [PlayerCreated](https://github.com/PlayFab/vanguard-outrider-2/blob/main/azure-functions/PlayerCreated.cs) - Equips a new player with starting items and stats.
+- [ProgressCheckpoint](https://github.com/PlayFab/vanguard-outrider-2/blob/main/azure-functions/ProgressCheckpoint.cs) - Performs actions to unlock items and characters after reaching key story points.
+- [ResetPlayer](https://github.com/PlayFab/vanguard-outrider-2/blob/main/azure-functions/ResetPlayer.cs) - Wipes user data, items, and statistics for a full reset.
+- [SellItem](https://github.com/PlayFab/vanguard-outrider-2/blob/main/azure-functions/SellItem.cs) - Enables selling items at a discount, which is not an inherent feature of the economy system. The purchase/sale flow is covered in more detail in the [source code and scenarios tutorial](source-code-and-best-practices.md).
 
-CloudScript functions are used to 
-For example, in this case the CloudScript function ‘ProgressCheckpoint’ is executed after the player wins a battle, updating the character’s stats, location, items gained/used, etc.
+Learn more about CloudScript with Azure Functions [here](../features/automation/cloudscript-af/index.md).
 
-[use code snippet to demonstrate how this azure function updates player data] vanguard-outrider-2/azure-functions/ProgressCheckpoint.cs at main · PlayFab/vanguard-outrider-2 (github.com)
-ProgressCheckpoint makes calls to the economy APIs
+> [!NOTE]
+> Winter Starfall's CloudScript functions are written in C#, but you can use any language supported by [Azure Functions](https://learn.microsoft.com/azure/azure-functions/supported-languages?tabs=isolated-process%2Cv4&pivots=programming-language-csharp).
+
+<!---
+PlayerCreated best practices - check that player is actually new and as not recieved anything
 
 In the activity stack, 
 [screenshot of API call]
 [copy of API request and response]
 
-Learn more about CloudScript with Azure Functions [here](../features/automation/cloudscript-af/index.md).
+```json
+{
+  "FunctionName": "CombatVictory",
+  "FunctionParameter": {
+    "party": {
+      "characters": [
+        {
+          "id": 1,
+          "hp": 5,
+          "maxHP": 35,
+          "mp": 3,
+          "maxMP": 8,
+          "level": 1,
+          "xp": 0,
+          "attack": 1,
+          "defense": 1,
+          "available": true,
+          "xpToNextLevel": 100,
+          "xpToCurrentLevel": 0
+        }
+      ]
+    },
+    "itemsUsed": {
+      "f1047f02-b03b-43c6-befd-f3d0cc07cf91": 1
+    },
+    "xpEarned": 30,
+    "reward": ""
+  }
+}
+```
+
+```json
+{
+  "code": 200,
+  "status": "OK",
+  "data": {
+    "ExecutionTimeMilliseconds": 944,
+    "FunctionName": "CombatVictory",
+    "FunctionResult": {
+      "itemsGranted": [],
+      "characters": [
+        {
+          "id": 1,
+          "hp": 5,
+          "maxHP": 35,
+          "mp": 8,
+          "maxMP": 8,
+          "level": 1,
+          "xp": 30,
+          "attack": 1,
+          "defense": 1,
+          "available": true,
+          "xpToNextLevel": 100,
+          "xpToCurrentLevel": 0
+        }
+      ]
+    }
+  },
+  "CallBackTimeMS": 1090
+}
+```
+--->
 
 ### Title news
 
@@ -153,9 +219,14 @@ Because Winter Starfall is powered by real player data, some features are limite
 
 ### Players
 
+The **Players** section of Game Manager is hidden in the Winter Starfall title in order to protect player information. Usually, you would be able to query the entire list of players in your game and select an individual account to update their data through Game Manager. From the player overview page you can view all information related to the player including inventory items, a record of all logins, player data, and more. 
+
 [screenshot - Sample of player overview (inventory, information, etc)]
 
+
 ### Data & Analytics
+
+Some of the features under the **Analyze** section are also limited to protect title and player information. This includes 
 
 [screenshot of sample query and reports]
 
