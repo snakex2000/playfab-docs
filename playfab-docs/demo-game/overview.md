@@ -226,25 +226,17 @@ Because Winter Starfall is powered by real player data, some features are limite
 
 The **Players** section of Game Manager is hidden in the Winter Starfall title in order to protect player information. Usually, you would be able to query the entire list of players in your game and select an individual account to update their data through Game Manager. From the player overview page you can view all information related to the player including inventory items, a record of all logins, player data, and more.
 
-[screenshot - Sample of player overview (inventory, information, etc)]
+![player overview](media/player-overview.png)
 
 ### Data & Analytics
 
-Some of the features under the **Analyze** section are also limited to protect title and player information. This includes 
+Some of the features under the **Analyze** section are also limited to protect title and player information. This includes the **Data** and **Audit History** sections. The **Data** section contains features like [Data Explorer](../data-analytics/learn-data/data-explorer/index.md) which allows you to query and view a PlayFab event records, which will show events (API calls) such as when a specific player logged in. 
 
-[screenshot of regular sidebar with missing sections highlighted]
+![data page](media/demo-game-data.png)
 
-#### Data
+[Audit history](../gamemanager/audit-logs.md) gives a view into the history of changes made to the title by anyone with edit access.
 
-[screenshot of sample query and reports]
-
-#### Audit history
-
-Audit history gives a view into the history of changes made to the title by anyone with edit access. 
-
-See the [audit logs documentation](../gamemanager/audit-logs.md) for more information.
-
-Also see the Data & Analytics documentation for more information on these features.
+For a full view of what other features are part of the **Data** section, see the [Data & analytics documentation](../data-analytics/index.yml).
 
 ### Other
 
@@ -255,10 +247,9 @@ Under title settings, the **Secret keys** tab is hidden.  Documention for secret
 ## Next steps
 
 After trying the demo, we recommend starting with these topics to learn more about how PlayFab works:
-- Learn more about [Game Manager](link)
-- Learn about Entity model
-- Other demos – recipes and samples
-- Learn about SDK
+- Learn more about [Game Manager](../gamemanager/index.md)
+- Learn about the [Entity model](../features/entities/index.md)
+- Learn about [PlayFab Services SDK](../sdks/sdk-overview.md)
 
 ## See also
 
