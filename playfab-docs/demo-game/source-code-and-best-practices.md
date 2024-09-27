@@ -73,10 +73,6 @@ For the login portion, the file [use-login.tsx](https://github.com/PlayFab/vangu
 
 The game offers 3 recoverable methods for player authentication: email, Google, and Facebook, so that player accounts will never be lost. For more information, see [Login best practices](../features/authentication/login/login-basics-best-practices.md).
 
-First part - login
-Login > progress.tsx, runner.tsx, sign-up-register.tsx reference use-login
-OnLogin, OnloginWithGoogle, OnLoginWithFacebook
-
 ### Post login: Getting player data
 
 Once the security token has been retrieved, it is used to run the post login functions to get the saved game state.
@@ -131,9 +127,72 @@ return new Promise<void>((resolve, reject) => {
 
 ## Purchase flow
 
-At certain points in the game, the player has the option to purchase and sell inventory items from the store. The purchase flow is implemented in another wrapper function.
+At certain points in the game, the player has the option to purchase and sell inventory items from the store. The purchase flow is implemented in another wrapper function. In the file [use-store.tx](https://github.com/PlayFab/vanguard-outrider-2/blob/main/website/src/hooks/use-store.ts) lines 40 - 69 brings up the correct store that the player encounters at a specific location and populates the items for sale by searching the catalog.
 
-In the file [use-store.tx](https://github.com/PlayFab/vanguard-outrider-2/blob/main/website/src/hooks/use-store.ts)
+```typescript
+export function useEconomyStoreSingle(storeName: string): IEconomyStoreSingleResults {
+	const dispatch = useDispatch();
+	const store = useSelector((state: AppState) => state.site.stores).find(store =>
+		store.AlternateIds?.find(friendlyId => friendlyId.Type === FRIENDLYID && friendlyId.Value === storeName)
+	);
+	const { isLoading, error, setError, EconomyGetItem } = usePlayFab();
+
+	useEffect(() => {
+		if (!is.null(store) || isStoreLoading) {
+			return;
+		}
+
+		isStoreLoading = true;
+
+		EconomyGetItem({
+			AlternateId: { Type: FRIENDLYID, Value: storeName },
+		})
+			.then(results => {
+				dispatch(siteSlice.actions.storeAdd(results.Item as PlayFabEconomyModels.CatalogItem));
+			})
+			.catch(setError)
+			.finally(() => {
+				isStoreLoading = false;
+			});
+	}, [EconomyGetItem, dispatch, setError, store, storeName]);
+
+	return {
+		error,
+		isLoading,
+		store,
+	};
+}
+```
+`EconomyGetItem` is defined in [use-playfab.tsx](https://github.com/PlayFab/vanguard-outrider-2/blob/main/website/src/hooks/use-playfab.ts) at lines 423 - 446, within which the PlayFab Economy API `GetItems` is used to search the catalog and return items.
+
+```typescript
+const EconomyGetItems = useCallback(
+		(request: PlayFabEconomyModels.GetItemsRequest): Promise<PlayFabEconomyModels.GetItemsResponse> => {
+			const date = startRequest("EconomyApi", "GetItems", request);
+
+			return new Promise((resolve, reject) => {
+				PlayFab.EconomyApi.GetItems(request, (result, problem) => {
+					endRequest(date, problem, result);
+
+					if (!is.null(problem)) {
+						return reject(problem);
+					}
+
+					if (result.code !== 200) {
+						return reject(formatPlayFabNon200Error(result));
+					}
+
+					return resolve(result.data);
+				}).catch(reason => {
+					catchRequest(reject, reason);
+				});
+			});
+		},
+		[catchRequest, endRequest, startRequest]
+	);
+```
+
+When a purchase is conducted, a call to the `PurchaseInventoryItems` API is made. This is defined in [use-playfab.tsx](https://github.com/PlayFab/vanguard-outrider-2/blob/main/website/src/hooks/use-playfab.ts) at lines 540 - 565.
 
 ### Selling items
 
@@ -183,20 +242,10 @@ export function useEconomyStoreSell(): IEconomyStoreSellItemResults {
 > [!NOTE]
 > To run Winter Starfall locally you'll need an Azure account to support the CloudScript functions. You can sign up for a free Azure account [here](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account?msockid=1dec68fa155462cb2baa7ca6147963d7) and then follow the instructions above to reset the Azure credentials correctly.
 
-Reach a checkpoint in the story where the player visits the store for the first time
-trackEvent({ name: "Checkpoint reached" }, { checkpoint: request.FunctionParameter.checkpoint});
-
-For more detailed information on Economy practices, see the Economy V2 documentation:
-
-- Overview
-- Stores
-- Inventory
-
-As a next step, Economy crafting game.
-EconomySearchItems – search catalog for inventory items
-Economy crafting game
-
 ## See also
 
-- Player login documentation
-- Economy V2 documentation
+- Login flow
+    - [Player login documentation](../features/authentication/login/index.md)
+- Purchase flow
+    - [Economy V2 documentation](../features/economy-v2/overview.md)
+    - Another good next step to learning more about Economy V2 is to try out the [crafting game tutorial](../features/economy-v2/tutorials/craftingGame/game-context.md), which focuses on building a sample game using the store and inventory functions.

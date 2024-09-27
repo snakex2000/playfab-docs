@@ -18,7 +18,7 @@ The game is available to play [here](link). If you already have a PlayFab develo
 
 ![studios overview demo games]
 
-The game is built as a web app and uses APIs from the PlayFab SDK [link] along with PlayFab’s Azure Functions integration to implement custom functionality. It currently makes use of the following features:
+The game is built as a web app and uses APIs from the PlayFab SDK [link] along with PlayFab’s Azure Functions integration to implement custom functionality. The game currently makes use of the following PlayFab features:
 
 - Economy V2 (catalog, currency, bundles, stores)
 - Title data, player data, and other core PlayFab functions
@@ -33,16 +33,18 @@ Next to the profile icon in the upper right there is a PlayFab icon that will op
 
 ![winter-starfall-profile](media/winter-starfall-activity.jpeg)
 
-1. The activity sidebar shows a list of API calls that updates as you play the game. 
+1. The activity sidebar shows a list of API calls that updates as you play the game. Each API call is tagged and color coded to indicate which PlayFab SDK it is related to.
 1. You can select one of the API calls in the list to view the full API request and response.
 1. Selecting **View title F8941** will open the title in Game Manager, the developer portal, where you can see how the different features are configured. This is where you'll be prompted to sign in with a PlayFab developer account.
 1. **Clear** will remove all the current notifications from the activity bar. 
 
+<!---
 You’ll also notice throughout the game these various callouts. Each of these indicates where a specific PlayFab feature is used to power a certain aspect of the game and hovering over will show more information and take you to the related pages in Game Manager.
 
 [screenshot - callouts]
+--->
 
-> [!NOTE] 
+> [!NOTE]
 > You can play the demo game at any time, but to access Game Manager you’ll need to sign up for a [free developer account](link]).
 
 ## Included PlayFab features
@@ -61,7 +63,7 @@ As a fantasy RPG style game, Winter Starfall includes an economy system for the 
 
 Learn more about Economy V2 [here](../features/economy-v2/overview.md).
 
-### Player data 
+### Player data
 
 Players in PlayFab have associated data that is stored in the service by different features. Player data as a feature allows you to store player-related information in key/value pairs or objects and files that can be shared across multiple games and devices.
 
@@ -112,7 +114,7 @@ Learn more about the Player data feature [here](../features/playerdata/index.md)
 
 ### Title data
 
-Title data is similar to Player data in that it stores key-value pairs, only the data pertains to the game title instead of a specific player. Winter Starfall uses title data in conjuction with the Economy system to calculate the price when selling an item by storing the value `multipliers` with a value of `sell, 0.5`.
+Title data is similar to Player data in that it stores key-value pairs, only the data pertains to the game title instead of a specific player. Winter Starfall uses title data in conjuction with the Economy system to calculate the price when selling an item by storing the value `multipliers` with a value of `sell, 0.5`. For more information on how the sale flow works, see the [source code and scenarios tutorial](source-code-and-best-practices.md).
 
 ![winterstarfall-title-data](winterstarfall-title-data.jpeg)
 
@@ -215,22 +217,40 @@ In addition to title news, PlayFab offers other communication features like temp
 
 ## Demo limitations
 
-Because Winter Starfall is powered by real player data, some features are limited in scope in the Game Manager view. This section will give an overview of what the limited features would look like in Game Manager. To explore these pages in more detail, you can [download the source code](link) and run a local instance of the game, or create your own new title [link to get started/logging in a player tutorial]. 
+Because Winter Starfall is powered by real player data, some features are limited in scope in the Game Manager view. This section will give an overview of what the limited features would look like in Game Manager. To explore these pages in more detail, you can [download the source code](link) and run a local instance of the game, or create your own new title from scratch.
+
+> [!NOTE]
+> For a full guide to the features in the developer portal, see the [Game Manager documentation](../gamemanager/index.md).
 
 ### Players
 
-The **Players** section of Game Manager is hidden in the Winter Starfall title in order to protect player information. Usually, you would be able to query the entire list of players in your game and select an individual account to update their data through Game Manager. From the player overview page you can view all information related to the player including inventory items, a record of all logins, player data, and more. 
+The **Players** section of Game Manager is hidden in the Winter Starfall title in order to protect player information. Usually, you would be able to query the entire list of players in your game and select an individual account to update their data through Game Manager. From the player overview page you can view all information related to the player including inventory items, a record of all logins, player data, and more.
 
 [screenshot - Sample of player overview (inventory, information, etc)]
-
 
 ### Data & Analytics
 
 Some of the features under the **Analyze** section are also limited to protect title and player information. This includes 
 
+[screenshot of regular sidebar with missing sections highlighted]
+
+#### Data
+
 [screenshot of sample query and reports]
 
+#### Audit history
+
+Audit history gives a view into the history of changes made to the title by anyone with edit access. 
+
+See the [audit logs documentation](../gamemanager/audit-logs.md) for more information.
+
 Also see the Data & Analytics documentation for more information on these features.
+
+### Other
+
+Under title settings, the **Secret keys** tab is hidden.  Documention for secret key managment is available [here](../gamemanager/secret-key-management.md).
+
+![secret-keys](../gamemanager/media/tutorials/game-manager-settings-edit-secret-key.png)
 
 ## Next steps
 
