@@ -12,9 +12,11 @@ ms.localizationpriority: medium
 
 # Demo game: Vanguard Outrider (legacy)
 
-Vanguard Outrider is a game previously created by the PlayFab team for customers to try out. It is available through Game Manager alongside Winter Starfall. We recommend referring to Winter Starfall for the most accurate example of our current feature set and best practice guidelines, and look at Vanguard Outrider as an additional resource for demonstrating
+Vanguard Outrider is a game previously created by the PlayFab team for customers to try out. It is available through Game Manager alongside Winter Starfall. We recommend referring to Winter Starfall for the most accurate example of our current feature set and best practice guidelines, and look at Vanguard Outrider as an additional resource for testing out PlayFab.
 
-[screenshot - home page demo games]
+You can find Vanguard Outrider in the demo games dropdown on the Studios & Titles overview in Game Manager.
+
+![game manager homepage showing demo games](media/demo-games-overview.png)
 
 ## Legacy features
 
