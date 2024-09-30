@@ -28,4 +28,5 @@ The features that run on legacy versions in Vanguard Outrider are:
 - [Play Vanguard Outrider](http://vanguardoutrider.com/)
 - Download [Vanguard Outrider source code](https://github.com/PlayFab/vanguard-outrider)
 
-Note! Requires credit card to run economy features
+> [!NOTE]
+> Running a local version of Vanguard Outrider requires a credit card to run the legacy economy features.
