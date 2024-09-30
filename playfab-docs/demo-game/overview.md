@@ -1,8 +1,8 @@
 ---
-title: 
-author: norie
+title: Overview - Winter Starfall
+author: natashaorie
 description: Landing page overview for Winter Starfall, a PlayFab demo game.
-ms.author: natashaorie
+ms.author: norie
 ms.date: 09/26/2024
 ms.topic: article
 ms.service: azure-playfab
@@ -27,11 +27,11 @@ The game is built as a web app and uses APIs from the PlayFab SDK [link] along w
 
 ## Additional demo features
 
-Winter Starfall comes with some features that make it easier to see what is going on ‘under the hood’ with PlayFab. The game is available for anyone to play, but to get the full use of these features you’ll need to sign up for a [free developer account](link). 
+Winter Starfall comes with some features that make it easier to see what is going on ‘under the hood’ with PlayFab. The game is available for anyone to play, but to get the full use of these features you’ll need to sign up for a [free developer account](https://developer.playfab.com/sign-up).
 
 Next to the profile icon in the upper right there is a PlayFab icon that will open the PlayFab activity sidebar when clicked.
 
-![winter-starfall-profile](media/winter-starfall-activity.jpeg)
+![winter-starfall-profile](media/winter-starfall-activity.jpg)
 
 1. The activity sidebar shows a list of API calls that updates as you play the game. Each API call is tagged and color coded to indicate which PlayFab SDK it is related to.
 1. You can select one of the API calls in the list to view the full API request and response.
@@ -69,7 +69,7 @@ Players in PlayFab have associated data that is stored in the service by differe
 
 In Winter Starfall, Player data is used to store the game state and information like which characters have joined the player's party. When the player moves through the story, their position is recorded in their player profile through a call to the UpdateUserData API[xref api docs]. This data is then accessed with GetUserData when they log in, to load the player into the right point in the story with all their past progress.
 
-![winter-starfall-player-data](media/winterstarfall-player-data.jpeg)
+![winter-starfall-player-data](media/winterstarfall-player-data.jpg)
 
 For example, these are the API request and response body from the call to `GetUserData` during the login flow. 
 
@@ -112,13 +112,13 @@ For example, these are the API request and response body from the call to `GetUs
 }
 ```
 
-Learn more about the Player data feature [here](../features/playerdata/index.md). 
+Learn more about the Player data feature [here](../features/playerdata/index.md).
 
 ### Title data
 
 Title data is similar to Player data in that it stores key-value pairs, only the data pertains to the game title instead of a specific player. Winter Starfall uses title data in conjuction with the Economy system to calculate the price when selling an item by storing the value `multipliers` with a value of `sell, 0.5`. For more information on how the sale flow works, see the [source code and scenarios tutorial](source-code-and-best-practices.md).
 
-![winterstarfall-title-data](media/winterstarfall-title-data.jpeg)
+![winterstarfall title data overview in game manager](media/winterstarfall-title-data.jpg)
 
 Learn more about Title data [here](../features/titledata/index.md).
 
@@ -213,7 +213,7 @@ In the activity stack,
 
 Title news is used to communicate with all players scoped to a title. Winter Starfall implements it as a notification system to display gameplay tips and notices. Additional capabilities such as using player segments to send messages to specific subsets of players, and Experimentation to A/B test with different messaging
 
-![winter-starfall-title-news](media/winterstarfall-title-news.jpeg)
+![winter-starfall-title-news](media/winterstarfall-title-news.jpg)
 
 In addition to title news, PlayFab offers other communication features like templating for email and push notifications. Learn more about title communication methods [here](../features/engagement/overview.md).
 

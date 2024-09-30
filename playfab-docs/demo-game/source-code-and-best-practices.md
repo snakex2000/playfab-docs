@@ -1,8 +1,8 @@
 ---
-title: 
-author: norie
+title: Source code and best practices - Winter Starfall
+author: natashaorie
 description: Tutorial for downloading Winter Starfall source code and best practices for login and purchase scenarios.
-ms.author: natashaorie
+ms.author: norie
 ms.date: 09/26/2024
 ms.topic: article
 ms.service: azure-playfab
@@ -240,7 +240,7 @@ export function useEconomyStoreSell(): IEconomyStoreSellItemResults {
 ```
 
 > [!NOTE]
-> To run Winter Starfall locally you'll need an Azure account to support the CloudScript functions. You can sign up for a free Azure account [here](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account?msockid=1dec68fa155462cb2baa7ca6147963d7) and then follow the instructions above to reset the Azure credentials correctly.
+> To run Winter Starfall locally you'll need an Azure account to support the CloudScript functions. You can sign up for a free Azure account [here](https://azure.microsoft.com/pricing/purchase-options/azure-account?msockid=1dec68fa155462cb2baa7ca6147963d7) and then follow the instructions above to reset the Azure credentials correctly.
 
 ## See also
 
