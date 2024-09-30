@@ -73,7 +73,8 @@ In Winter Starfall, Player data is used to store the game state and information 
 
 For example, these are the API request and response body from the call to `GetUserData` during the login flow. 
 
-API Request - GetUserData
+**GetUserData - Request**
+
 ```json
 {
   "Keys": [
@@ -86,7 +87,8 @@ API Request - GetUserData
   ]
 }
 ```
-API Response - GetUserData
+
+**GetUserData - Response**
 ```json
 {
   "code": 200,
@@ -116,7 +118,7 @@ Learn more about the Player data feature [here](../features/playerdata/index.md)
 
 Title data is similar to Player data in that it stores key-value pairs, only the data pertains to the game title instead of a specific player. Winter Starfall uses title data in conjuction with the Economy system to calculate the price when selling an item by storing the value `multipliers` with a value of `sell, 0.5`. For more information on how the sale flow works, see the [source code and scenarios tutorial](source-code-and-best-practices.md).
 
-![winterstarfall-title-data](winterstarfall-title-data.jpeg)
+![winterstarfall-title-data](media/winterstarfall-title-data.jpeg)
 
 Learn more about Title data [here](../features/titledata/index.md).
 
