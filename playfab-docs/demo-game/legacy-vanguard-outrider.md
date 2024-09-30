@@ -18,6 +18,8 @@ You can find Vanguard Outrider in the demo games dropdown on the Studios & Title
 
 ![game manager homepage showing demo games](media/demo-games-overview.png)
 
+Vanguard Outrider is different from Winter Starfall in that it requires an empty PlayFab title to populate with data, which you can create after [signing up for a free PlayFab account](https://developer.playfab.com/sign-up).
+
 ## Legacy features
 
 The features that run on legacy versions in Vanguard Outrider are:

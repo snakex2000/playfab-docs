@@ -211,7 +211,8 @@ In the activity stack,
 
 ### Title news
 
-Title news is used to communicate with all players scoped to a title. Winter Starfall implements it as a notification system to display gameplay tips and notices. Additional capabilities such as using player segments to send messages to specific subsets of players, and Experimentation to A/B test with different messaging
+Title news is used to communicate with all players scoped to a title. Winter Starfall implements it as a notification system to display gameplay tips and notices.
+<!--- Additional capabilities such as using player segments to send messages to specific subsets of players, and Experimentation to A/B test with different messaging --->
 
 ![winter-starfall-title-news](media/winterstarfall-title-news.jpg)
 
