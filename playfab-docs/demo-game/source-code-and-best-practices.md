@@ -124,7 +124,7 @@ return new Promise<void>((resolve, reject) => {
 });
 ```
 
-- First `ClientGetTitleData`
+- First `ClientGetTitleData` gets the secret key needed for all API calls
 - Then `EconomySearchItems` searches the catalog for currency and item types
 - Which is used as input to `EconomyGetInventoryItems` to return the player's inventory items
 - Then `ClientGetUserData` retrieves the value that stores the story location as part of a player's data.

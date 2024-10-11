@@ -14,7 +14,7 @@ ms.localizationpriority: medium
 
 Winter Starfall is a game developed by PlayFab to showcase our different features and provide a way to explore how they are implemented in a live game.
 
-The game is available to play at [WinterStarfall.com](http://winterstarfall.com/). If you already have a PlayFab developer account you can also access it through the developer portal on the My Studios and Titles page.
+The game is available to play at [WinterStarfall.com](https://winterstarfall.com/). If you already have a PlayFab developer account you can also access it through the developer portal on the My Studios and Titles page.
 
 ![game manager homepage showing demo games](media/demo-games-overview.png)
 
@@ -27,7 +27,7 @@ The game is built as a web app and uses APIs from the PlayFab SDK along with Pla
 
 ## Additional demo features
 
-Winter Starfall comes with features that make it easier to see what is going on ‘under the hood’ with PlayFab. The game is available for anyone to play, but to get the full use of these features you’ll need to sign up for a [free developer account](https://developer.playfab.com/sign-up).
+Winter Starfall comes with features that make it easier to see what is going on ‘under the hood’ with PlayFab. The game is available for anyone to play, but to get the full use of these features you’ll need to sign up for a [free developer account](https://developer.playfab.com/en-us/sign-up).
 
 Next to the profile icon in the upper right there is a PlayFab icon that will open the PlayFab activity sidebar when clicked.
 
@@ -45,7 +45,7 @@ You’ll also notice throughout the game these various callouts. Each of these i
 --->
 
 > [!NOTE]
-> You can play the demo game at any time, but to access Game Manager you’ll need to sign up for a [free developer account](https://developer.playfab.com/en-us/sign-up]).
+> You can play the demo game at any time, but to access Game Manager you’ll need to sign up for a [free developer account](https://developer.playfab.com/en-us/sign-up).
 
 ## Included PlayFab features
 
@@ -139,76 +139,6 @@ The game uses this feature to solve for a number of scenarios:
 > [!NOTE]
 > Winter Starfall's CloudScript functions are written in C#, but you can use any language supported by [Azure Functions](https://learn.microsoft.com/azure/azure-functions/supported-languages?tabs=isolated-process%2Cv4&pivots=programming-language-csharp).
 
-<!---
-PlayerCreated best practices - check that player is actually new and as not recieved anything
-
-In the activity stack, 
-[screenshot of API call]
-[copy of API request and response]
-
-```json
-{
-  "FunctionName": "CombatVictory",
-  "FunctionParameter": {
-    "party": {
-      "characters": [
-        {
-          "id": 1,
-          "hp": 5,
-          "maxHP": 35,
-          "mp": 3,
-          "maxMP": 8,
-          "level": 1,
-          "xp": 0,
-          "attack": 1,
-          "defense": 1,
-          "available": true,
-          "xpToNextLevel": 100,
-          "xpToCurrentLevel": 0
-        }
-      ]
-    },
-    "itemsUsed": {
-      "f1047f02-b03b-43c6-befd-f3d0cc07cf91": 1
-    },
-    "xpEarned": 30,
-    "reward": ""
-  }
-}
-```
-
-```json
-{
-  "code": 200,
-  "status": "OK",
-  "data": {
-    "ExecutionTimeMilliseconds": 944,
-    "FunctionName": "CombatVictory",
-    "FunctionResult": {
-      "itemsGranted": [],
-      "characters": [
-        {
-          "id": 1,
-          "hp": 5,
-          "maxHP": 35,
-          "mp": 8,
-          "maxMP": 8,
-          "level": 1,
-          "xp": 30,
-          "attack": 1,
-          "defense": 1,
-          "available": true,
-          "xpToNextLevel": 100,
-          "xpToCurrentLevel": 0
-        }
-      ]
-    }
-  },
-  "CallBackTimeMS": 1090
-}
-```
---->
-
 ### Title news
 
 Title news is used to communicate with all players scoped to a title. Winter Starfall implements it as a notification system to display gameplay tips and notices.
@@ -222,7 +152,7 @@ In addition to title news, PlayFab offers other communication features like temp
 
 ## Demo limitations
 
-Because Winter Starfall is powered by real player data, some features are limited in scope in the Game Manager view. This section will give an overview of what the limited features would look like in Game Manager. To explore these pages in more detail, you can [download the source code](link) and run a local instance of the game, or create your own new title from scratch.
+Because Winter Starfall is powered by real player data, some features are limited in scope in the Game Manager view. This section will give an overview of what the limited features would look like in Game Manager. To explore these pages in more detail, you can [download the source code](https://github.com/PlayFab/winter-starfall) and run a local instance of the game, or create your own new title from scratch.
 
 > [!NOTE]
 > For a full guide to the features in the developer portal, see the [Game Manager documentation](../gamemanager/index.md).
@@ -247,7 +177,8 @@ For a full view of what other features are part of the **Data** section, see the
 
 Under title settings, the **Secret keys** tab is hidden. See the [documention for secret key management](../gamemanager/secret-key-management.md).
 
-![secret-keys](media/secret-keys.jpg)
+![Game Manager UI showing Secret Keys page](media/secret-keys.jpg)
+
 ## Next steps
 
 After trying the demo, we recommend starting with these topics to learn more about how PlayFab works:
@@ -257,5 +188,5 @@ After trying the demo, we recommend starting with these topics to learn more abo
 
 ## See also
 
-- [Play Winter Starfall](http://winterstarfall.com/)
+- [Play Winter Starfall](https://winterstarfall.com/)
 - [Tutorial: Download source code and example flows](source-code-and-best-practices.md)
