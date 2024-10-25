@@ -100,7 +100,7 @@ August 16, 2023
 
 ### Bug fixes
 
-- Fixes a bug where the GDK DLL was not being codesigned. This is a GDK-only release.
+- Fixes a bug where the GDK DLL wasn't being codesigned. This is a GDK-only release.
 
 ## 1.6.3
 
@@ -144,7 +144,7 @@ April 25, 2023
 
 ### Bug fixes
 
-- Fix a linker error specific to iOS and macOS where HttpClient.framework would not be found during runtime.
+- Fix a linker error specific to iOS and macOS where HttpClient.framework wouldn't be found during runtime.
 
 ## 1.5.2
 
