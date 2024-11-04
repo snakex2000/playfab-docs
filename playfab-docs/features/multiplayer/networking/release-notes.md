@@ -27,6 +27,7 @@ October 14, 2024
 - Increased `c_maxNetworkConfigurationMaxDeviceCount` from 32 to 128.
 - Updated internal diagnostics.
 - Updated build settings for security hardening.
+- Fixed an issue with exposed OpenSSL symbols on the macOS platform.
 
 ## 1.10.2
 
