@@ -12,6 +12,25 @@ ms.localizationpriority: medium
 
 # PlayFab Multiplayer C++ SDK release notes
 
+## 1.7.8
+
+Nov 5, 2024
+
+### Bug fixes
+
+- Fixed an issue where calling [PFMatchmakingTicketCancel](../playfabmultiplayerreference-cpp/pfmatchmaking/functions/pfmatchmakingticketcancel.md) for a backfill ticket created with [PFMultiplayerCreateServerBackfillTicket](../playfabmultiplayerreference-cpp/pfmatchmaking/functions/pfmultiplayercreateserverbackfillticket.md) would fail.
+- Fixed an issue where the SDK treated all values in [PFMultiplayerServerDetails](../playfabmultiplayerreference-cpp/pfmatchmaking/structs/pfmultiplayerserverdetails.md) as mandatory.
+- Fixed an issue where the Sony (PlayStation&#174;4 and PlayStation&#174;5) versions of the SDK did not correctly handle intermittent HTTP request failures from the Sony (PlayStation&#174;4 and PlayStation&#174;5) HTTP library. Additionally, improved error reporting to provide more detailed information in such cases.
+
+'PlayStation' is a registered trademark or trademark of Sony Interactive Entertainment Inc.
+
+## 1.7.7
+
+Oct 25, 2024
+
+### Bug fixes
+- Fixed an issue with exposed OpenSSL symbols on the macOS platform. This is a macOS-only release.
+
 ## 1.7.6
 
 Aug 12, 2024
@@ -38,7 +57,7 @@ June 17, 2024
 
 - Fixed an issue where messages received by websockets on PlayStation&#174;4 and, PlayStation&#174;5 would not be parsed correctly by the SDK if they contained the `'\0'` character. Failure to parse these messages could lead to PubSub connectivity issues. This is a PlayStation&#174;4 and, PlayStation&#174;5 only release.
 
-“PlayStation” is a registered trademark or trademark of Sony Interactive Entertainment Inc.
+'PlayStation' is a registered trademark or trademark of Sony Interactive Entertainment Inc.
 
 ## 1.7.3
 
@@ -93,7 +112,7 @@ August 16, 2023
 
 ### Bug fixes
 
-- Fixes a bug where the GDK DLL was not being codesigned. This is a GDK-only release.
+- Fixes a bug where the GDK DLL wasn't being codesigned. This is a GDK-only release.
 
 ## 1.6.3
 
@@ -121,7 +140,7 @@ June 14, 2023
 
 - On PlayStation&#174;4 and, PlayStation&#174;5, PlayFab Multiplayer cleans up all resources associated with it and reinitialize if the title enters and remains in background mode for more than 10 minutes.
 
-“PlayStation” is a registered trademark or trademark of Sony Interactive Entertainment Inc.
+'PlayStation' is a registered trademark or trademark of Sony Interactive Entertainment Inc.
 
 ## 1.6.0
 
@@ -137,7 +156,7 @@ April 25, 2023
 
 ### Bug fixes
 
-- Fix a linker error specific to iOS and macOS where HttpClient.framework would not be found during runtime.
+- Fix a linker error specific to iOS and macOS where HttpClient.framework wouldn't be found during runtime.
 
 ## 1.5.2
 
