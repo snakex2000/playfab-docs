@@ -44,10 +44,11 @@ Here's the list of APIs that tick this meter:
 
 This meter keeps track on how much statistics data is stored in the service.
 
-For each entity statistic, the storage consumed per version of the statistic is computed as the sum of the following three:
+For each entity statistic, the storage consumed per version of the statistic is computed as the sum of the following elements:
 - Scores: Length of the list of scores multiplied by `sizeof(long)`.
 - Metadata: Length of the field.
 - Timestamp: `sizeof(long)`.
+- Length of the entity id.
 
 ## See Also
 
